@@ -26,13 +26,13 @@ int main(void) {
 		// Don't do anything.
 		GPIO_PORTF_DATA_R |= 0x10;
 
-		for (i=0; i<2000; i++) {
+		for (i=0; i<1650; i++) {
 			;
 		}
 
 		GPIO_PORTF_DATA_R &= ~(0x10);
 
-		for (i=0; i<2000; i++) {
+		for (i=0; i<1650; i++) {
 			;
 		}
 	}
