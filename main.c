@@ -4,9 +4,14 @@
  * main.c
  */
 
+#include <stdint.h>
+
 #include "inc/lm4f120h5qr.h"	// LM4F120H5QR: our board
 #include "inc/hw_types.h"		// Register datatypes
 #include "driverlib/sysctl.h"	// Clock setup
+
+#include "tone.h"
+#include "util.h"
 
 
 int main(void) {
@@ -30,22 +35,13 @@ int main(void) {
 	GPIO_PORTF_DIR_R = 0x10;
 	GPIO_PORTF_DEN_R = 0x10;
 
-	while(1) {
-		// Don't do anything.
-		GPIO_PORTF_DATA_R |= 0x10;
 
-		// 440Hz (A4): (16*10^6 cycle / 1 sec) * (1 loop / 11 cycle) * (1 sec / 880 transition)
-		// -> 1652 loop / transition
-		for (i=0; i<1652; i++) {
-			;
-		}
-
-		GPIO_PORTF_DATA_R &= ~(0x10);
-
-		for (i=0; i<1652; i++) {
-			;
-		}
-	}
+	tone_t mario_theme[] = { {E5, 195}, {SILENCE, 10}, {E5, 195}, {SILENCE, 200}, {E5, 200}, {SILENCE, 200}, {C5, 200}, {E5, 200}, {SILENCE, 200}, {G5, 200}, {SILENCE, 600}, {G4, 200} };
+    uint8_t iterator = 0;
+    while (iterator < ARRAY_LENGTH(mario_theme)) {
+        PlayTone(&(mario_theme[iterator]));
+        iterator++;
+    }
 
 	return 0;
 }
