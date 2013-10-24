@@ -36,7 +36,7 @@ int main(void) {
 	GPIO_PORTF_DEN_R = 0x10;
 
 
-	tone_t mario_theme[] = { {E5, 195}, {SILENCE, 10}, {E5, 195}, {SILENCE, 200}, {E5, 200}, {SILENCE, 200}, {C5, 200}, {E5, 200}, {SILENCE, 200}, {G5, 200}, {SILENCE, 600}, {G4, 200} };
+	tone_t mario_theme[] = { {E5, 198}, {SILENCE, 4}, {E5, 198}, {SILENCE, 200}, {E5, 200}, {SILENCE, 200}, {C5, 200}, {E5, 200}, {SILENCE, 200}, {G5, 200}, {SILENCE, 600}, {G4, 200} };
     uint8_t iterator = 0;
     while (iterator < ARRAY_LENGTH(mario_theme)) {
         PlayTone(&(mario_theme[iterator]));

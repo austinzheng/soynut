@@ -17,8 +17,9 @@ void PlayTone(tone_t* tone) {
     // Silence is a special case: just do nothing for as long as was specified.
     if (tone->note == SILENCE) {
         // x, # loops = frequency (aka cycles/sec) / (cycles/loop) * (period of silence, in sec)
-        uint32_t num_loops = ((16000000 / 1000) / 11) * (tone->duration); // clk * (1/(period) * cycles)
-        uint32_t i;
+        uint64_t num_loops = ((16000000 / 1000) / 33) * (tone->duration); // clk * (1/(period) * cycles)
+        //@todo why does /33 sound so much more accurate than /11?
+        uint64_t i;
 
         GPIO_PORTF_DATA_R &= ~(0x10);
 
