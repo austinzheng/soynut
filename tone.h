@@ -17,6 +17,11 @@ typedef struct tone_s {
 } tone_t;
 
 
+// temp
+void triangleTest();
+void sawtoothTest();
+void squareTest();
+
 void PlayTone(tone_t* tone);
 
 

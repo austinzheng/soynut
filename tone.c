@@ -13,6 +13,75 @@
 #include "note.h"
 
 
+// Try A440 as triangle note.
+// A440 = 440 cycles/second. If dividing into 16 intervals, each is 1/7040 seconds in duration
+// 16 MHz clock, 11 cycles per loop = 1454545 loops/sec
+// 206 loops per pwm (1454545/7040)
+/*
+ * 0: 3.125% = 6
+ * 1: 13
+ * 2: 19
+ * 3: 26
+ * 4: 32
+ * 5: 39
+ * 6: 45
+ * 7: 52
+ * 8: 58
+ * 9: 64
+ * 10: 71
+ * 11: 77
+ * 12: 84
+ * 13: 90
+ * 14: 97
+ * 15: 103
+ */
+
+void triangleTest() {
+	long levels[16] = { 6, 19, 32, 45, 58, 71, 84, 97, 103, 90, 77, 64, 52, 39, 26, 13};
+
+	int high = 0;
+		int low = 0;
+		int i, j;
+		for (i=0; i<16; i++) {
+			high = levels[i];
+			low = 206 - high;
+			// High
+			GPIO_PORTF_DATA_R |= 0x10;
+			for (j=0; j<high; j++) ;
+			// Low
+			GPIO_PORTF_DATA_R &= ~(0x10);
+			for (j=0; j<low; j++) ;
+		}
+}
+
+void sawtoothTest() {
+	long levels[16] = { 6, 13, 19, 26, 32, 39, 45, 52, 58, 64, 71, 77, 84, 90, 97, 103 };
+
+	int high = 0;
+	int low = 0;
+	int i, j;
+	for (i=0; i<16; i++) {
+		high = levels[i];
+		low = 206 - high;
+		// High
+		GPIO_PORTF_DATA_R |= 0x10;
+		for (j=0; j<high; j++) ;
+		// Low
+		GPIO_PORTF_DATA_R &= ~(0x10);
+		for (j=0; j<low; j++) ;
+	}
+}
+
+void squareTest() {
+	int i;
+	GPIO_PORTF_DATA_R |= 0x10;
+	for (i=0; i<1653; i++) ;
+	GPIO_PORTF_DATA_R &= ~(0x10);
+	for (i=0; i<1654; i++) ;
+}
+
+
+
 void PlayTone(tone_t* tone) {
     // Silence is a special case: just do nothing for as long as was specified.
     if (tone->note == SILENCE) {
